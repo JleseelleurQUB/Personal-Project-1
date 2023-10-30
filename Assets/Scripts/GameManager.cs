@@ -11,7 +11,9 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        // script is applied to an empty in both scenes, called component exists only in game scene. This therefore throws up error in main menu despite working overall, possible refactoring required
+        bossHealth = GameObject.Find("Boss Health Bar").GetComponent<Slider>();
+        Debug.Log(bossHealth.value);
     }
 
     // Update is called once per frame
@@ -32,9 +34,9 @@ public class GameManager : MonoBehaviour
         }
     }
 
+
     public void WoundBoss()
     {
-        bossHealth = GameObject.Find("Boss Health Bar").GetComponent<Slider>();
         bossHealth.value--;
     }
 }
