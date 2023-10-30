@@ -11,9 +11,6 @@ public class Projectile : MonoBehaviour
     public float vanishDistance;
     
  
-
-
-    
     // Start is called before the first frame update
     void Start()
     {
@@ -36,9 +33,8 @@ public class Projectile : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Boss"))
         {
-            GameObject bossHealth = GameObject.Find("Boss Health Bar");
-            bossHealth.GetComponent<Slider>().value--;
-            Debug.Log("hit");
+            GameManager gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
+            gameManager.WoundBoss();
             Destroy(gameObject);
         }
     }
