@@ -29,11 +29,12 @@ public class PlayerController : MonoBehaviour
 
         
 
-        //player controls actuation
+        // controls the players movement and horizontal turning through key and mouse inputs
         transform.Translate(Vector3.right * inputHorizontal * Time.deltaTime * speed);
         transform.Translate(Vector3.forward * inputVertical * Time.deltaTime * speed);
         transform.Rotate(Vector3.up, inputMouseHorizontal * turnSpeedHorizontal);
 
+        // spawns projectile and starts cooldown when pressing space
         if (Input.GetKeyDown(KeyCode.Space) && harpoonAvailable)
         {
             SpawnHarpoon();

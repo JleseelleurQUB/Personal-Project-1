@@ -28,6 +28,7 @@ public class GameManager : MonoBehaviour
         {
             case "Start":
                 {
+                    // loads main game scene
                     SceneManager.LoadScene("My Game");
                     break;
                 }
@@ -37,6 +38,7 @@ public class GameManager : MonoBehaviour
 
     public void WoundBoss()
     {
+        // reduces boss health slider by 1 when called
         bossHealth.value--;
     }
 }
