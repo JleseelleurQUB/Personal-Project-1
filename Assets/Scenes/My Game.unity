@@ -507,6 +507,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 4eddaf60306df7d4bbf5eeb3d3a3cb9d, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1318607229}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 4eddaf60306df7d4bbf5eeb3d3a3cb9d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1318607234}
   m_SourcePrefab: {fileID: 100100000, guid: 4eddaf60306df7d4bbf5eeb3d3a3cb9d, type: 3}
 --- !u!1 &963194225
 GameObject:
@@ -836,6 +839,8 @@ MonoBehaviour:
   turnSpeedHorizontal: 1.2
   harpoonRecharge: 1
   harpoonPrefab: {fileID: 3843381958334806965, guid: 6c43c108da1c9ad4389747accde002d9, type: 3}
+  playerAnim: {fileID: 0}
+  playerRB: {fileID: 0}
 --- !u!137 &1318607231
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 0
@@ -917,6 +922,27 @@ CapsuleCollider:
   m_Height: 12.38
   m_Direction: 1
   m_Center: {x: 0.02, y: 6.12, z: 0}
+--- !u!95 &1318607234
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1318607228}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: 4eddaf60306df7d4bbf5eeb3d3a3cb9d, type: 3}
+  m_Controller: {fileID: 9100000, guid: 9a75a0cdcd3296c4981d38d82508acbe, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1404965294
 GameObject:
   m_ObjectHideFlags: 0

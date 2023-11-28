@@ -13,18 +13,21 @@ public class PlayerController : MonoBehaviour
     private bool harpoonAvailable = true;
 
     public GameObject harpoonPrefab;
+    public Animator playerAnim;
+    public Rigidbody playerRB;
     // Start is called before the first frame update
     void Start()
     {
-      
+      playerAnim = GetComponent<Animator>();
+      playerRB = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
     void Update()
     {
         //update inputs
-        inputHorizontal = Input.GetAxis("Horizontal");
-        inputVertical = Input.GetAxis("Vertical");
+        inputHorizontal = -Input.GetAxis("Horizontal");
+        inputVertical = -Input.GetAxis("Vertical");
         inputMouseHorizontal = Input.GetAxis("Mouse X");
 
         
@@ -39,6 +42,20 @@ public class PlayerController : MonoBehaviour
         {
             SpawnHarpoon();
             StartCoroutine(HarpoonRecharge());
+        }
+
+
+        // animation
+        playerAnim.SetFloat("Horizontal Speed", inputHorizontal);
+        playerAnim.SetFloat("Forward Speed", -inputVertical);
+        
+        if(playerRB.velocity.magnitude > 0)
+        {
+            playerAnim.SetBool("Idle", false);
+        }
+        else
+        {
+            playerAnim.SetBool("Idle", true);
         }
     }
 
