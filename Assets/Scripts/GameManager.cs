@@ -8,12 +8,16 @@ public class GameManager : MonoBehaviour
 {
 
     private Slider bossHealth;
+    private Slider playerHealth; 
     // Start is called before the first frame update
     void Start()
     {
         // script is applied to an empty in both scenes, called component exists only in game scene. This therefore throws up error in main menu despite working overall, possible refactoring required
         bossHealth = GameObject.Find("Boss Health Bar").GetComponent<Slider>();
+        playerHealth = GameObject.Find("Player Health Bar").GetComponent<Slider>();
         Debug.Log(bossHealth.value);
+
+
         Scene currentScene = SceneManager.GetActiveScene();
         if(currentScene.name == "My Game")
         {
@@ -45,5 +49,10 @@ public class GameManager : MonoBehaviour
     {
         // reduces boss health slider by 1 when called
         bossHealth.value--;
+    }
+
+    public void WoundPlayer()
+    {
+        playerHealth.value--;
     }
 }

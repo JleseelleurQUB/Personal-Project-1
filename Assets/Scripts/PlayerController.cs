@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour
     public GameObject harpoonPrefab;
     public Animator playerAnim;
     public Rigidbody playerRB;
+    public GameObject firePoint;
     // Start is called before the first frame update
     void Start()
     {
@@ -26,8 +27,8 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         //update inputs
-        inputHorizontal = -Input.GetAxis("Horizontal");
-        inputVertical = -Input.GetAxis("Vertical");
+        inputHorizontal = Input.GetAxis("Horizontal");
+        inputVertical = Input.GetAxis("Vertical");
         inputMouseHorizontal = Input.GetAxis("Mouse X");
 
         
@@ -46,8 +47,8 @@ public class PlayerController : MonoBehaviour
 
 
         // animation
-        playerAnim.SetFloat("Horizontal Speed", inputHorizontal);
-        playerAnim.SetFloat("Forward Speed", -inputVertical);
+        playerAnim.SetFloat("Horizontal Speed", -inputHorizontal);
+        playerAnim.SetFloat("Forward Speed", inputVertical);
         
         if(playerRB.velocity.magnitude > 0)
         {
@@ -67,7 +68,7 @@ public class PlayerController : MonoBehaviour
 
     void SpawnHarpoon()
     {
-        Instantiate(harpoonPrefab, transform.position, transform.rotation);
+        Instantiate(harpoonPrefab, firePoint.transform.position, transform.rotation);
         harpoonAvailable = false;
     }
 

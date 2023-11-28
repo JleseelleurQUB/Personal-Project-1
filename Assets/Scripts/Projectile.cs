@@ -39,6 +39,7 @@ public class Projectile : MonoBehaviour
         {
             GameManager gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
             gameManager.WoundBoss();
+            Debug.Log("hit");
             Destroy(gameObject);
         }
     }
