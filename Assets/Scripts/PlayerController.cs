@@ -26,17 +26,14 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //update inputs
-        inputHorizontal = Input.GetAxis("Horizontal");
-        inputVertical = Input.GetAxis("Vertical");
-        inputMouseHorizontal = Input.GetAxis("Mouse X");
+        //checks for player control inputs
 
-        
+        GetInputs();
 
-        // controls the players movement and horizontal turning through key and mouse inputs
-        transform.Translate(Vector3.right * inputHorizontal * Time.deltaTime * speed);
-        transform.Translate(Vector3.forward * inputVertical * Time.deltaTime * speed);
-        transform.Rotate(Vector3.up, inputMouseHorizontal * turnSpeedHorizontal);
+
+        // controls the players movement and horizontal turning based on the key and mouse inputs
+
+        UpdateMovement();
 
         // spawns projectile and starts cooldown when pressing space
         if (Input.GetKeyDown(KeyCode.Space) && harpoonAvailable)
@@ -45,11 +42,6 @@ public class PlayerController : MonoBehaviour
             StartCoroutine(HarpoonRecharge());
         }
 
-
-        // animation
-        playerAnim.SetFloat("Horizontal Speed", -inputHorizontal);
-        playerAnim.SetFloat("Forward Speed", inputVertical);
-        
         if(playerRB.velocity.magnitude > 0)
         {
             playerAnim.SetBool("Idle", false);
@@ -70,6 +62,24 @@ public class PlayerController : MonoBehaviour
     {
         Instantiate(harpoonPrefab, firePoint.transform.position, transform.rotation);
         harpoonAvailable = false;
+    }
+
+    void GetInputs()
+    {
+        inputHorizontal = Input.GetAxis("Horizontal");
+        inputVertical = Input.GetAxis("Vertical");
+        inputMouseHorizontal = Input.GetAxis("Mouse X");
+    }
+
+    void UpdateMovement()
+    {
+        transform.Translate(Vector3.right * inputHorizontal * Time.deltaTime * speed);
+        transform.Translate(Vector3.forward * inputVertical * Time.deltaTime * speed);
+        transform.Rotate(Vector3.up, inputMouseHorizontal * turnSpeedHorizontal);
+
+        // animation
+        playerAnim.SetFloat("Horizontal Speed", -inputHorizontal);
+        playerAnim.SetFloat("Forward Speed", inputVertical);
     }
 
 }
