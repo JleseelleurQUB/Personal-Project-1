@@ -8,13 +8,13 @@ public class BossController : MonoBehaviour
     private Vector3 playerDirection;
     public GameObject player;
     public Animator bossAnim;
-    private GameManager gameManager;
+  
 
     // Start is called before the first frame update
     void Start()
     {
         bossAnim = GetComponent<Animator>();
-        gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
+       
     }
 
     // Update is called once per frame
@@ -38,12 +38,4 @@ public class BossController : MonoBehaviour
         }
     }
 
-    // console tells player if they have been hit
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.name == "Player")
-        {
-            gameManager.WoundPlayer();
-        }
-    }
 }

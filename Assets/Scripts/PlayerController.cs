@@ -16,11 +16,13 @@ public class PlayerController : MonoBehaviour
     public Animator playerAnim;
     public Rigidbody playerRB;
     public GameObject firePoint;
+    private GameManager gameManager;
     // Start is called before the first frame update
     void Start()
     {
       playerAnim = GetComponent<Animator>();
       playerRB = GetComponent<Rigidbody>();
+      gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
     }
 
     // Update is called once per frame
@@ -82,4 +84,12 @@ public class PlayerController : MonoBehaviour
         playerAnim.SetFloat("Forward Speed", inputVertical);
     }
 
+    // Calls game manager to reduce player healthbar when colliding with a hitbox
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("hitbox"))
+        {
+           gameManager.WoundPlayer();
+        }
+    }
 }
