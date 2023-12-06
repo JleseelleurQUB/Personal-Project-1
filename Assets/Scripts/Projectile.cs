@@ -18,7 +18,7 @@ public class Projectile : MonoBehaviour
         harpoonRB = GetComponent<Rigidbody>();
 
         // shoots the projectile forwards upon instantiation
-        harpoonRB.AddForce(transform.forward * shootVelocity * Time.deltaTime, ForceMode.Impulse);
+        harpoonRB.AddForce(transform.forward * shootVelocity, ForceMode.Impulse);
     }
 
     // Update is called once per frame
