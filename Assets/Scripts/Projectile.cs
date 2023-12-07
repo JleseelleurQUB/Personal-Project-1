@@ -9,13 +9,15 @@ public class Projectile : MonoBehaviour
     private Rigidbody harpoonRB;
     private GameObject player;
     public float vanishDistance;
-    
- 
+    private GameManager gameManager;
+
+
     // Start is called before the first frame update
     void Start()
     {
         player = GameObject.Find("Player");
         harpoonRB = GetComponent<Rigidbody>();
+        gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
 
         // shoots the projectile forwards upon instantiation
         harpoonRB.AddForce(transform.forward * shootVelocity, ForceMode.Impulse);
@@ -30,6 +32,11 @@ public class Projectile : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        if (gameManager.gameActive == false)
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -37,7 +44,6 @@ public class Projectile : MonoBehaviour
         // calls game manager's wound boss function upon impacting the boss's collider
         if (collision.gameObject.CompareTag("Boss"))
         {
-            GameManager gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
             gameManager.WoundBoss();
             Debug.Log("hit");
             Destroy(gameObject);

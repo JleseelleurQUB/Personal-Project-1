@@ -37,8 +37,9 @@ public class PlayerController : MonoBehaviour
 
         UpdateMovement();
 
+
         // spawns projectile and starts cooldown when pressing space
-        if (Input.GetKeyDown(KeyCode.Space) && harpoonAvailable)
+        if (Input.GetKeyDown(KeyCode.Space) && harpoonAvailable && gameManager.gameActive)
         {
             SpawnHarpoon();
             StartCoroutine(HarpoonRecharge());
@@ -75,13 +76,16 @@ public class PlayerController : MonoBehaviour
 
     void UpdateMovement()
     {
-        transform.Translate(Vector3.right * inputHorizontal * Time.deltaTime * speed);
-        transform.Translate(Vector3.forward * inputVertical * Time.deltaTime * speed);
-        transform.Rotate(Vector3.up, inputMouseHorizontal * turnSpeedHorizontal);
+        if (gameManager.gameActive)
+        {
+            transform.Translate(Vector3.right * inputHorizontal * Time.deltaTime * speed);
+            transform.Translate(Vector3.forward * inputVertical * Time.deltaTime * speed);
+            transform.Rotate(Vector3.up, inputMouseHorizontal * turnSpeedHorizontal);
 
-        // animation
-        playerAnim.SetFloat("Horizontal Speed", -inputHorizontal);
-        playerAnim.SetFloat("Forward Speed", inputVertical);
+            // animation
+            playerAnim.SetFloat("Horizontal Speed", -inputHorizontal);
+            playerAnim.SetFloat("Forward Speed", inputVertical);
+        }
     }
 
     // Calls game manager to reduce player healthbar when colliding with a hitbox

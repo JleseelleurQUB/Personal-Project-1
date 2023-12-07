@@ -8,27 +8,42 @@ public class GameManager : MonoBehaviour
 {
 
     private Slider bossHealth;
-    private Slider playerHealth; 
+    private Slider playerHealth;
+    private GameObject pauseMenu;
+    private GameObject activeUI;
+    private Scene currentScene;
+
+    public bool gameActive = true;
     // Start is called before the first frame update
     void Start()
     {
-        // script is applied to an empty in both scenes, called component exists only in game scene. This therefore throws up error in main menu despite working overall, possible refactoring required
-        bossHealth = GameObject.Find("Boss Health Bar").GetComponent<Slider>();
-        playerHealth = GameObject.Find("Player Health Bar").GetComponent<Slider>();
-        Debug.Log(bossHealth.value);
+       
+      
+       currentScene = SceneManager.GetActiveScene();
 
-
-        Scene currentScene = SceneManager.GetActiveScene();
-        if(currentScene.name == "My Game")
+        // Initialises UI components in script and locks cursor in centre of screen to avoid issues with mouse navigation
+        if (currentScene.name == "My Game")
         {
             Cursor.lockState = CursorLockMode.Locked;
+            bossHealth = GameObject.Find("Boss Health Bar").GetComponent<Slider>();
+            playerHealth = GameObject.Find("Player Health Bar").GetComponent<Slider>();
+            pauseMenu = GameObject.Find("Ingame Menu UI");
+            pauseMenu.SetActive(false);
+            activeUI = GameObject.Find("ActiveUI");
+
         }
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            if (currentScene.name == "My Game")
+            {
+                UpdateMenu();
+            }
+        }
     }
 
     public void OnButtonPress(string buttonText)
@@ -54,5 +69,21 @@ public class GameManager : MonoBehaviour
     public void WoundPlayer()
     {
         playerHealth.value--;
+    }
+
+    private void UpdateMenu()
+    {
+        if(gameActive)
+        {
+            gameActive = false; 
+            pauseMenu.SetActive(true);
+            activeUI.SetActive(false);
+        }
+        else 
+        {
+            gameActive = true;
+            pauseMenu.SetActive(false);
+            activeUI.SetActive(true);
+        }
     }
 }
