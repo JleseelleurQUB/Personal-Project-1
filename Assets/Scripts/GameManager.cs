@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
     private GameObject activeUI;
     private Scene currentScene;
 
-    public bool gameActive = true;
+    public bool gameActive;
     // Start is called before the first frame update
     void Start()
     {
@@ -29,8 +29,8 @@ public class GameManager : MonoBehaviour
             playerHealth = GameObject.Find("Player Health Bar").GetComponent<Slider>();
             pauseMenu = GameObject.Find("Ingame Menu UI");
             pauseMenu.SetActive(false);
-            activeUI = GameObject.Find("ActiveUI");
-
+            activeUI = GameObject.Find("Active UI");
+            gameActive = true;
         }
     }
 
@@ -44,6 +44,8 @@ public class GameManager : MonoBehaviour
                 UpdateMenu();
             }
         }
+
+        Debug.Log(gameActive);
     }
 
     public void OnButtonPress(string buttonText)

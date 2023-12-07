@@ -83,8 +83,13 @@ public class PlayerController : MonoBehaviour
             transform.Rotate(Vector3.up, inputMouseHorizontal * turnSpeedHorizontal);
 
             // animation
+            playerAnim.speed = 1;
             playerAnim.SetFloat("Horizontal Speed", -inputHorizontal);
             playerAnim.SetFloat("Forward Speed", inputVertical);
+        }
+        else
+        {
+            playerAnim.speed = 0;
         }
     }
 

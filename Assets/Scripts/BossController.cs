@@ -8,12 +8,13 @@ public class BossController : MonoBehaviour
     private Vector3 playerDirection;
     public GameObject player;
     public Animator bossAnim;
-  
+    private GameManager gameManager;
 
     // Start is called before the first frame update
     void Start()
     {
         bossAnim = GetComponent<Animator>();
+        gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
        
     }
 
@@ -24,17 +25,25 @@ public class BossController : MonoBehaviour
         playerDirection = transform.position - player.transform.position;
         playerDirection.y = 0;
 
-        if (playerDirection.magnitude > 10)
+        if (gameManager.gameActive)
         {
-            bossAnim.SetBool("Tracking", true);
-            transform.LookAt(player.transform.position);
-            transform.Translate(playerDirection.normalized * Time.deltaTime * 4);
+            bossAnim.speed = 1;
+            if (playerDirection.magnitude > 10)
+            {
+                bossAnim.SetBool("Tracking", true);
+                transform.LookAt(player.transform.position);
+                transform.Translate(playerDirection.normalized * Time.deltaTime * 4);
+            }
+            else
+            {
+                bossAnim.SetBool("Tracking", false);
+                bossAnim.SetTrigger("Attack");
+                transform.LookAt(player.transform.position);
+            }
         }
-        else
+        else 
         {
-            bossAnim.SetBool("Tracking", false);
-            bossAnim.SetTrigger("Attack");
-            transform.LookAt(player.transform.position);
+            bossAnim.speed = 0;
         }
     }
 
