@@ -58,6 +58,12 @@ public class GameManager : MonoBehaviour
                     SceneManager.LoadScene("My Game");
                     break;
                 }
+            case "Quit":
+                {
+                    // loads main menu scene
+                    SceneManager.LoadScene("Main Menu");
+                    break;
+                }
         }
     }
 
