@@ -80,12 +80,14 @@ public class GameManager : MonoBehaviour
             gameActive = false; 
             pauseMenu.SetActive(true);
             activeUI.SetActive(false);
+            Cursor.lockState = CursorLockMode.None;
         }
         else 
         {
             gameActive = true;
             pauseMenu.SetActive(false);
             activeUI.SetActive(true);
+            Cursor.lockState = CursorLockMode.Locked;
         }
     }
 }
