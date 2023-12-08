@@ -45,7 +45,6 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        Debug.Log(gameActive);
     }
 
     public void OnButtonPress(string buttonText)

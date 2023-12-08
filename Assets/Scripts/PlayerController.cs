@@ -69,6 +69,9 @@ public class PlayerController : MonoBehaviour
 
     void SpawnHarpoon()
     {
+        shootAudio.clip = shoot;
+        shootAudio.time = 0.3f;
+        shootAudio.Play();
         Instantiate(harpoonPrefab, firePoint.transform.position, transform.rotation);
         harpoonAvailable = false;
     }
