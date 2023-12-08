@@ -120,9 +120,13 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("hitbox") && hitCooldown)
         {
+          
             gameManager.WoundPlayer();
-            bodyAudio.time = 0.8f;
-            bodyAudio.PlayOneShot(impact);
+            bodyAudio.clip = impact;
+            bodyAudio.time = 0.6f;
+            bodyAudio.Play();
+
+
             hitCooldown = false;
             StartCoroutine(PlayerHitCooldown());
         }
