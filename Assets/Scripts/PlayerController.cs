@@ -11,18 +11,29 @@ public class PlayerController : MonoBehaviour
     public float turnSpeedHorizontal;
     public float harpoonRecharge;
     private bool harpoonAvailable = true;
+    private bool hitCooldown = true;
 
     public GameObject harpoonPrefab;
-    public Animator playerAnim;
-    public Rigidbody playerRB;
+    private Animator playerAnim;
+    private Rigidbody playerRB;
     public GameObject firePoint;
     private GameManager gameManager;
+
+    private AudioSource bodyAudio;
+    private AudioSource shootAudio;
+
+    public AudioClip footstep;
+    public AudioClip shoot;
+    public AudioClip impact;
+
     // Start is called before the first frame update
     void Start()
     {
       playerAnim = GetComponent<Animator>();
       playerRB = GetComponent<Rigidbody>();
       gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
+      bodyAudio = GetComponent<AudioSource>();
+      shootAudio = firePoint.GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -45,15 +56,10 @@ public class PlayerController : MonoBehaviour
             StartCoroutine(HarpoonRecharge());
         }
 
-        if(playerRB.velocity.magnitude > 0)
-        {
-            playerAnim.SetBool("Idle", false);
-        }
-        else
-        {
-            playerAnim.SetBool("Idle", true);
-        }
+
     }
+
+    // HARPOON FUNCTIONS
 
     IEnumerator HarpoonRecharge()
     {
@@ -67,6 +73,8 @@ public class PlayerController : MonoBehaviour
         harpoonAvailable = false;
     }
 
+    // MOVEMENT FUNCTIONS
+
     void GetInputs()
     {
         inputHorizontal = Input.GetAxis("Horizontal");
@@ -78,11 +86,23 @@ public class PlayerController : MonoBehaviour
     {
         if (gameManager.gameActive)
         {
+            // player location and rotation update
+
             transform.Translate(Vector3.right * inputHorizontal * Time.deltaTime * speed);
             transform.Translate(Vector3.forward * inputVertical * Time.deltaTime * speed);
             transform.Rotate(Vector3.up, inputMouseHorizontal * turnSpeedHorizontal);
 
-            // animation
+            // animation parameters update
+
+            if (playerRB.velocity.magnitude > 0)
+            {
+                playerAnim.SetBool("Idle", false);
+            }
+            else
+            {
+                playerAnim.SetBool("Idle", true);
+            }
+
             playerAnim.speed = 1;
             playerAnim.SetFloat("Horizontal Speed", -inputHorizontal);
             playerAnim.SetFloat("Forward Speed", inputVertical);
@@ -93,12 +113,24 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    // PLAYER HIT FUNCTIONS
+
     // Calls game manager to reduce player healthbar when colliding with a hitbox
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("hitbox"))
+        if (collision.gameObject.CompareTag("hitbox") && hitCooldown)
         {
-           gameManager.WoundPlayer();
+            gameManager.WoundPlayer();
+            bodyAudio.time = 0.8f;
+            bodyAudio.PlayOneShot(impact);
+            hitCooldown = false;
+            StartCoroutine(PlayerHitCooldown());
         }
+    }
+
+    IEnumerator PlayerHitCooldown()
+    {
+        yield return new WaitForSeconds(2);
+        hitCooldown = true;
     }
 }
