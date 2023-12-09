@@ -1503,8 +1503,10 @@ MonoBehaviour:
   speed: 8
   turnSpeedHorizontal: 1.2
   harpoonRecharge: 1
-  harpoonPrefab: {fileID: 5759974995762499301, guid: a6c47c5eecacf3a48925bd1cbacfa500, type: 3}
   firePoint: {fileID: 1054765830}
+  harpoonPrefab: {fileID: 5759974995762499301, guid: a6c47c5eecacf3a48925bd1cbacfa500, type: 3}
+  bloodSpatter: {fileID: 3469430136696292406, guid: 15c80078c8d9b5e4fb1c099f1eea1fb3, type: 3}
+  airBubbles: {fileID: 5879282498154364857, guid: caf7a3fa8a1f6664bba889467ba6df48, type: 3}
   footstep: {fileID: 8300000, guid: ac7afd1e68aff4f4c8da72268419baf5, type: 3}
   shoot: {fileID: 8300000, guid: 5925122a05640c0498475875fae03f94, type: 3}
   impact: {fileID: 8300000, guid: 2b1aa33aab4ac9a45aee7db912c05f1f, type: 3}

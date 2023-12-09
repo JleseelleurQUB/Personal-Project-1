@@ -148,4 +148,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shootVelocity: 30
+  bloodSpatter: {fileID: 3469430136696292406, guid: 15c80078c8d9b5e4fb1c099f1eea1fb3, type: 3}
   vanishDistance: 200

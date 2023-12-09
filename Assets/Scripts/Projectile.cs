@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class Projectile : MonoBehaviour
 {
     public float shootVelocity;
+    public ParticleSystem bloodSpatter;
     private Rigidbody harpoonRB;
     private GameObject player;
     public float vanishDistance;
@@ -47,7 +48,7 @@ public class Projectile : MonoBehaviour
             BossController bossScript = collision.gameObject.GetComponent<BossController>();
             bossScript.HurtBoss();
             gameManager.WoundBoss();
-            Debug.Log("hit");
+            Instantiate(bloodSpatter, transform.position, bloodSpatter.transform.rotation);
             Destroy(gameObject);
         }
     }

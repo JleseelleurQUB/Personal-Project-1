@@ -13,10 +13,13 @@ public class PlayerController : MonoBehaviour
     private bool harpoonAvailable = true;
     private bool hitCooldown = true;
 
+    public GameObject firePoint;
     public GameObject harpoonPrefab;
+    public ParticleSystem bloodSpatter;
+    public ParticleSystem airBubbles;
     private Animator playerAnim;
     private Rigidbody playerRB;
-    public GameObject firePoint;
+ 
     private GameManager gameManager;
 
     private AudioSource bodyAudio;
@@ -72,6 +75,7 @@ public class PlayerController : MonoBehaviour
     {
         shootAudio.PlayOneShot(shoot);
         Instantiate(harpoonPrefab, firePoint.transform.position, transform.rotation);
+        Instantiate(airBubbles, firePoint.transform.position, firePoint.transform.rotation);
         harpoonAvailable = false;
     }
 
@@ -134,6 +138,7 @@ public class PlayerController : MonoBehaviour
             gameManager.WoundPlayer();
             bodyAudio.volume = 0.9f;
             bodyAudio.PlayOneShot(impact);
+            Instantiate(bloodSpatter, transform.position, bloodSpatter.transform.rotation);
 
 
             hitCooldown = false;
