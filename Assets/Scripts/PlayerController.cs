@@ -59,6 +59,14 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    public void FootstepAudio()
+    {
+        bodyAudio.volume = 0.15f;
+        bodyAudio.clip = footstep;
+        bodyAudio.time = 1.0f;
+        bodyAudio.Play();
+    }
+
     // HARPOON FUNCTIONS
 
     IEnumerator HarpoonRecharge()
@@ -95,6 +103,7 @@ public class PlayerController : MonoBehaviour
             transform.Translate(Vector3.forward * inputVertical * Time.deltaTime * speed);
             transform.Rotate(Vector3.up, inputMouseHorizontal * turnSpeedHorizontal);
 
+
             // animation parameters update
 
             if (playerRB.velocity.magnitude > 0)
@@ -126,6 +135,7 @@ public class PlayerController : MonoBehaviour
           
             gameManager.WoundPlayer();
             bodyAudio.clip = impact;
+            bodyAudio.volume = 1.0f;
             bodyAudio.time = 0.6f;
             bodyAudio.Play();
 

@@ -15,9 +15,8 @@ public class BossController : MonoBehaviour
     public AudioMixerGroup emphasise;
     public AudioMixerGroup master;
     private AudioSource bossAudio;
-    public AudioClip creatureNoise1;
-    public AudioClip creatureNoise2;
-    public AudioClip hit;
+    public AudioClip[] creatureNoises;
+
 
 
     // Start is called before the first frame update
@@ -50,9 +49,19 @@ public class BossController : MonoBehaviour
             }
             else
             {
-                bossAnim.SetBool("Tracking", false);
-                bossAnim.SetTrigger("Attack");
-                transform.LookAt(playerLocationPlane);
+                if (bossAnim.GetBool("Attack"))
+                {
+                    transform.LookAt(playerLocationPlane);
+                }
+                else
+                {
+                    bossAnim.SetBool("Tracking", false);
+                    bossAnim.SetTrigger("Attack");
+                    //bossAudio.pitch = 0.4f;
+                    //bossAudio.volume = 0.7f;
+                    bossAudio.clip = creatureNoises[Random.Range(0,3)];
+                    //bossAudio.Play();
+                }
             }
         }
         else 
@@ -65,8 +74,7 @@ public class BossController : MonoBehaviour
     public void AttackLandEvent()
     {
         bossAudio.outputAudioMixerGroup = emphasise;
-        bossAudio.clip = hit;
-        bossAudio.time = 1.0f;
+        bossAudio.clip = creatureNoises[0];
         bossAudio.Play();
 
         if (bossAudio.outputAudioMixerGroup.name == "Emphasise")

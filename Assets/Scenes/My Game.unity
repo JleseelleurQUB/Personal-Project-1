@@ -250,9 +250,10 @@ MonoBehaviour:
   bossAnim: {fileID: 0}
   emphasise: {fileID: 0}
   master: {fileID: 0}
-  creatureNoise1: {fileID: 8300000, guid: 5672567195c4b024e9c13b517cf289ac, type: 3}
-  creatureNoise2: {fileID: 8300000, guid: 8097dcd6f4442044ca02559fc28a4fbd, type: 3}
-  hit: {fileID: 8300000, guid: 3682c3ae422281a47ae883c63c01fc04, type: 3}
+  creatureNoises:
+  - {fileID: 8300000, guid: 3682c3ae422281a47ae883c63c01fc04, type: 3}
+  - {fileID: 8300000, guid: 5672567195c4b024e9c13b517cf289ac, type: 3}
+  - {fileID: 8300000, guid: 8097dcd6f4442044ca02559fc28a4fbd, type: 3}
 --- !u!136 &431376353
 CapsuleCollider:
   m_ObjectHideFlags: 0
