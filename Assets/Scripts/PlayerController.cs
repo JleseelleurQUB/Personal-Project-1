@@ -59,13 +59,6 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    public void FootstepAudio()
-    {
-        bodyAudio.volume = 0.15f;
-        bodyAudio.clip = footstep;
-        bodyAudio.time = 1.0f;
-        bodyAudio.Play();
-    }
 
     // HARPOON FUNCTIONS
 
@@ -77,9 +70,7 @@ public class PlayerController : MonoBehaviour
 
     void SpawnHarpoon()
     {
-        shootAudio.clip = shoot;
-        shootAudio.time = 0.3f;
-        shootAudio.Play();
+        shootAudio.PlayOneShot(shoot);
         Instantiate(harpoonPrefab, firePoint.transform.position, transform.rotation);
         harpoonAvailable = false;
     }
@@ -125,6 +116,13 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void FootstepAudio()
+    {
+        bodyAudio.volume = 0.05f;
+        bodyAudio.PlayOneShot(footstep);
+    }
+
+
     // PLAYER HIT FUNCTIONS
 
     // Calls game manager to reduce player healthbar when colliding with a hitbox
@@ -134,10 +132,8 @@ public class PlayerController : MonoBehaviour
         {
           
             gameManager.WoundPlayer();
-            bodyAudio.clip = impact;
-            bodyAudio.volume = 1.0f;
-            bodyAudio.time = 0.6f;
-            bodyAudio.Play();
+            bodyAudio.volume = 0.9f;
+            bodyAudio.PlayOneShot(impact);
 
 
             hitCooldown = false;

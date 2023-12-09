@@ -44,6 +44,8 @@ public class Projectile : MonoBehaviour
         // calls game manager's wound boss function upon impacting the boss's collider
         if (collision.gameObject.CompareTag("Boss"))
         {
+            BossController bossScript = collision.gameObject.GetComponent<BossController>();
+            bossScript.HurtBoss();
             gameManager.WoundBoss();
             Debug.Log("hit");
             Destroy(gameObject);

@@ -57,10 +57,9 @@ public class BossController : MonoBehaviour
                 {
                     bossAnim.SetBool("Tracking", false);
                     bossAnim.SetTrigger("Attack");
-                    //bossAudio.pitch = 0.4f;
-                    //bossAudio.volume = 0.7f;
-                    bossAudio.clip = creatureNoises[Random.Range(0,3)];
-                    //bossAudio.Play();
+                    bossAudio.pitch = 0.4f;
+                    bossAudio.volume = 0.8f;
+                    bossAudio.PlayOneShot(creatureNoises[Random.Range(1, 3)]);
                 }
             }
         }
@@ -73,17 +72,16 @@ public class BossController : MonoBehaviour
 
     public void AttackLandEvent()
     {
-        bossAudio.outputAudioMixerGroup = emphasise;
-        bossAudio.clip = creatureNoises[0];
-        bossAudio.Play();
+        bossAudio.PlayOneShot(creatureNoises[0]);
+    }
 
-        if (bossAudio.outputAudioMixerGroup.name == "Emphasise")
+    public void HurtBoss()
+    {
+        // 40% chance boss lets out cry on being hit by player
+        if (Random.Range(0, 100) > 60)
         {
-            Debug.Log("receiving");
-        }
-        else
-        { 
-            Debug.Log("not receiving");
+            bossAudio.pitch = 0.6f;
+            bossAudio.PlayOneShot(creatureNoises[Random.Range(1, 3)]);
         }
     }
 

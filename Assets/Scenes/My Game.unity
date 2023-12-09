@@ -1507,7 +1507,7 @@ MonoBehaviour:
   firePoint: {fileID: 1054765830}
   footstep: {fileID: 8300000, guid: ac7afd1e68aff4f4c8da72268419baf5, type: 3}
   shoot: {fileID: 8300000, guid: 5925122a05640c0498475875fae03f94, type: 3}
-  impact: {fileID: 8300000, guid: 3570237371c1635489bb2820f7dad3f5, type: 3}
+  impact: {fileID: 8300000, guid: 2b1aa33aab4ac9a45aee7db912c05f1f, type: 3}
 --- !u!137 &1318607231
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 0
