@@ -18,6 +18,12 @@ public class BossController : MonoBehaviour
     public AudioClip[] creatureNoises;
     private bool alive = true;
     private bool falling = false;
+    private bool preppingCharge = false;
+    private bool chargeReady = false;
+    private bool charging = false;
+    private bool chargeAvailable = true;
+    [SerializeField] float chargeTime;
+    [SerializeField] float chargeSpeed;
 
 
 
@@ -33,19 +39,44 @@ public class BossController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // finds player direction and moves towards them
+ 
         
+        // Controls boss position, movement, animation
+        if (alive)
+        {
+            BossAI();
+
+        }
+
+
+        // Boss continually falls when defeated
+        if (falling)
+        {
+            transform.Translate(0, -0.1f, 0);
+        }
+
+        Debug.Log(preppingCharge);
+    }
+
+
+    private void BossAI()
+    {
+        // Prevents boss falling through floor when pushed by player
+        transform.position = new Vector3(transform.position.x, -0.9f, transform.position.z);
+
+        // Finds player direction
         playerLocationPlane = player.transform.position;
         playerLocationPlane.y = 0;
 
         playerDirection = transform.position - playerLocationPlane;
 
-        if (alive)
-        {
-            transform.position = new Vector3(transform.position.x, -0.9f, transform.position.z);
 
-            if (gameManager.gameActive)
+        if (gameManager.gameActive) // Game unpaused
+        {
+            
+            if (!chargeAvailable || Random.Range(0, 100) > (0.000000000000000000000002 * Time.deltaTime) && !preppingCharge) // chance of beginning charge routine if available, during which ordinary AI behaviour will not activate
             {
+
                 bossAnim.speed = 1;
                 if (playerDirection.magnitude > 10)
                 {
@@ -64,23 +95,82 @@ public class BossController : MonoBehaviour
                         bossAnim.SetBool("Tracking", false);
                         bossAnim.SetTrigger("Attack");
                         bossAudio.pitch = 0.4f;
-                        bossAudio.volume = 0.8f;
+                        bossAudio.volume = 1;
                         bossAudio.PlayOneShot(creatureNoises[Random.Range(1, 3)]);
                     }
                 }
             }
-            else
+
+            else // Charge routine
             {
-                bossAnim.speed = 0;
+                if (!preppingCharge && !charging)
+                {
+                    StartCoroutine(ChargeTime());
+                    preppingCharge = true;
+                    bossAnim.SetBool("Tracking", false);
+                }
+                else if (preppingCharge && !charging && !chargeReady)
+                {
+                    transform.LookAt(playerLocationPlane);
+                }
+                else if (chargeReady && !charging)
+                {
+                    charging = true;
+                    bossAudio.pitch = 0.4f;
+                    bossAudio.volume = 1;
+                    bossAudio.PlayOneShot(creatureNoises[Random.Range(1, 3)]);
+                    StartCoroutine(ChargeDuration());
+                }
+                else if (charging)
+                {
+                    transform.Translate(Vector3.forward * chargeSpeed * Time.deltaTime);
+                    bossAnim.speed = 4;
+                }
+                else
+                {
+                    Debug.Log("charge logic error");
+                }
             }
         }
-
-        if (falling)
+        // Game paused
+        else
         {
-            transform.Translate(0, -0.1f, 0);
+            bossAnim.speed = 0;
         }
     }
 
+
+    // CHARGE COROUTINES
+
+    // Time to prepare charge
+    IEnumerator ChargeTime()
+    {
+        yield return new WaitForSeconds(chargeTime);
+        chargeReady = true;
+    }
+
+    // Duration of charge
+    IEnumerator ChargeDuration()
+    {
+        yield return new WaitForSeconds(1.5f);
+        charging = false;
+        preppingCharge = false;
+        chargeReady = false;
+        chargeAvailable = false;
+        bossAnim.speed = 1;
+        StartCoroutine(ChargeCooldown());
+    }
+
+    IEnumerator ChargeCooldown()
+    {
+        yield return new WaitForSeconds(Random.Range(10, 18));
+        chargeAvailable = true;
+    }
+
+
+    // AUDIO EVENTS
+
+    // Plays sound when boss attack hits the ground
     public void AttackLandEvent()
     {
         bossAudio.PlayOneShot(creatureNoises[0]);
@@ -96,6 +186,8 @@ public class BossController : MonoBehaviour
         }
     }
 
+
+    // Boss death routine
     public void BossDeath()
     {
         alive = false;

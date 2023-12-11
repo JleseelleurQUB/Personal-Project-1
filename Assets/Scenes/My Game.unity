@@ -358,6 +358,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: ac7afd1e68aff4f4c8da72268419baf5, type: 3}
   - {fileID: 8300000, guid: 8446e1a91c0325344b325ab2d3f64879, type: 3}
   - {fileID: 8300000, guid: 5959b8898af1d0b45a3d2d3905b919d5, type: 3}
+  chargeTime: 1
+  chargeSpeed: 20
 --- !u!136 &431376353
 CapsuleCollider:
   m_ObjectHideFlags: 0
