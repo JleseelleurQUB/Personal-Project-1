@@ -12,6 +12,8 @@ public class PlayerController : MonoBehaviour
     public float harpoonRecharge;
     private bool harpoonAvailable = true;
     private bool hitCooldown = true;
+    private bool alive = true;
+    private bool falling = false;
 
     public GameObject firePoint;
     public GameObject harpoonPrefab;
@@ -42,24 +44,30 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //checks for player control inputs
-
-        GetInputs();
-
-
-        // controls the players movement and horizontal turning based on the key and mouse inputs
-
-        UpdateMovement();
-
-
-        // spawns projectile and starts cooldown when pressing space
-        if (Input.GetKeyDown(KeyCode.Space) && harpoonAvailable && gameManager.gameActive)
+        if (alive)
         {
-            SpawnHarpoon();
-            StartCoroutine(HarpoonRecharge());
+            //checks for player control inputs
+
+            GetInputs();
+
+
+            // controls the players movement and horizontal turning based on the key and mouse inputs
+
+            UpdateMovement();
+
+
+            // spawns projectile and starts cooldown when pressing space
+            if (Input.GetKeyDown(KeyCode.Space) && harpoonAvailable && gameManager.gameActive)
+            {
+                SpawnHarpoon();
+                StartCoroutine(HarpoonRecharge());
+            }
         }
-
-
+       
+        if (falling)
+        {
+            transform.Translate(0, -0.1f, 0);
+        }
     }
 
 
@@ -78,6 +86,7 @@ public class PlayerController : MonoBehaviour
         Instantiate(airBubbles, firePoint.transform.position, firePoint.transform.rotation);
         harpoonAvailable = false;
     }
+
 
     // MOVEMENT FUNCTIONS
 
@@ -150,5 +159,11 @@ public class PlayerController : MonoBehaviour
     {
         yield return new WaitForSeconds(2);
         hitCooldown = true;
+    }
+
+    public void PlayerDeath()
+    {
+        alive = false;
+        falling = true;
     }
 }

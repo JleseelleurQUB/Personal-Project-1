@@ -21,7 +21,7 @@ public class Projectile : MonoBehaviour
         gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
 
         // shoots the projectile forwards upon instantiation
-        harpoonRB.AddForce(transform.forward * shootVelocity, ForceMode.Impulse);
+        harpoonRB.AddForce(transform.forward * shootVelocity * Time.deltaTime, ForceMode.Impulse);
     }
 
     // Update is called once per frame

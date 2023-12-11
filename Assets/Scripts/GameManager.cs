@@ -1,8 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+
 
 public class GameManager : MonoBehaviour
 {
@@ -11,7 +14,10 @@ public class GameManager : MonoBehaviour
     private Slider playerHealth;
     private GameObject pauseMenu;
     private GameObject activeUI;
+    private GameObject endgameUI;
     private Scene currentScene;
+    public TextMeshProUGUI endgameText;
+   
 
     public bool gameActive;
     // Start is called before the first frame update
@@ -31,20 +37,21 @@ public class GameManager : MonoBehaviour
             pauseMenu.SetActive(false);
             activeUI = GameObject.Find("Active UI");
             gameActive = true;
+            endgameUI = GameObject.Find("Endgame UI");
+            endgameUI.SetActive(false);
         }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Tab))
+        if (Input.GetKeyDown(KeyCode.Tab) && !endgameUI.activeInHierarchy)
         {
             if (currentScene.name == "My Game")
             {
                 UpdateMenu();
             }
         }
-
     }
 
     public void OnButtonPress(string buttonText)
@@ -71,11 +78,51 @@ public class GameManager : MonoBehaviour
     {
         // reduces boss health slider by 1 when called
         bossHealth.value--;
+
+        if (bossHealth.value < 1)
+        {
+            BossController boss = GameObject.Find("fishBoss").GetComponent<BossController>();
+            boss.BossDeath();
+            StartCoroutine(EndgameDelay("player"));
+        }
     }
 
     public void WoundPlayer()
     {
         playerHealth.value--;
+
+        if (playerHealth.value < 1)
+        {
+            PlayerController player = GameObject.Find("Player").GetComponent<PlayerController>();
+            player.PlayerDeath();
+            StartCoroutine(EndgameDelay("boss"));
+        }
+    }
+
+    IEnumerator EndgameDelay(string winner)
+    {
+        yield return new WaitForSeconds(2);
+        DisplayEndgame(winner);
+        
+    }
+
+    private void DisplayEndgame(string winner)
+    {
+        endgameUI.SetActive(true);
+        Cursor.lockState = CursorLockMode.None;
+        switch (winner)
+        {
+            case "player":
+                {
+                    endgameText.text = "You Win!";
+                    break;
+                }
+            case "boss":
+                {
+                    endgameText.text = "Game Over";
+                    break;
+                }
+        }
     }
 
     private void UpdateMenu()
