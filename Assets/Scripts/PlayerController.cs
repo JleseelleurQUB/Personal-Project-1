@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -67,6 +68,11 @@ public class PlayerController : MonoBehaviour
         if (falling)
         {
             transform.Translate(0, -0.1f, 0);
+        }
+
+        if (transform.position.y < -30 && GameObject.Find("Player Health Bar").GetComponent<Slider>().value > 0)
+        {
+            gameManager.WoundPlayer();
         }
     }
 

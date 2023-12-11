@@ -17,9 +17,8 @@ public class GameManager : MonoBehaviour
     private GameObject endgameUI;
     private Scene currentScene;
     public TextMeshProUGUI endgameText;
-   
-
     public bool gameActive;
+
     // Start is called before the first frame update
     void Start()
     {
