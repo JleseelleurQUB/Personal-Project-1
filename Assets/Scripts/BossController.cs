@@ -10,7 +10,8 @@ public class BossController : MonoBehaviour
     private Vector3 playerDirection;
     private Vector3 playerLocationPlane;
     public GameObject player;
-    public Animator bossAnim;
+    public GameObject arm;
+    private Animator bossAnim;
     private GameManager gameManager;
     private AudioSource bossAudio;
     public AudioClip[] creatureNoises;
@@ -22,6 +23,7 @@ public class BossController : MonoBehaviour
     private bool chargeAvailable = true;
     [SerializeField] float chargeTime;
     [SerializeField] float chargeSpeed;
+    private Collider armHitbox;
 
 
 
@@ -32,6 +34,7 @@ public class BossController : MonoBehaviour
         gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
         bossAudio = GetComponent<AudioSource>();
         alive = true;
+        armHitbox = arm.GetComponent<Collider>();
     }
 
     // Update is called once per frame
@@ -53,7 +56,6 @@ public class BossController : MonoBehaviour
             transform.Translate(0, -0.1f, 0);
         }
 
-      
     }
 
 
@@ -72,7 +74,7 @@ public class BossController : MonoBehaviour
         if (gameManager.gameActive) // Game unpaused
         {
             
-            if (!chargeAvailable || Random.Range(0, 100) > (0.000000000000000000000002 * Time.deltaTime) && !preppingCharge) // chance of beginning charge routine if available, during which ordinary AI behaviour will not activate
+            if (!chargeAvailable || Random.Range(0f, 100f) > (20 * Time.deltaTime) && !preppingCharge) // chance of beginning charge routine if available, during which ordinary AI behaviour will not activate
             {
 
                 bossAnim.speed = 1;
@@ -80,7 +82,7 @@ public class BossController : MonoBehaviour
                 {
                     bossAnim.SetBool("Tracking", true);
                     transform.LookAt(playerLocationPlane);
-                    transform.Translate(playerDirection.normalized * Time.deltaTime * 4);
+                    transform.Translate(-playerDirection.normalized * Time.deltaTime * 4, Space.World);
                 }
                 else
                 {
@@ -95,6 +97,7 @@ public class BossController : MonoBehaviour
                         bossAudio.pitch = 0.4f;
                         bossAudio.volume = 1;
                         bossAudio.PlayOneShot(creatureNoises[Random.Range(1, 3)]);
+                        armHitbox.enabled = true;
                     }
                 }
             }
@@ -106,6 +109,7 @@ public class BossController : MonoBehaviour
                     StartCoroutine(ChargeTime());
                     preppingCharge = true;
                     bossAnim.SetBool("Tracking", false);
+                    armHitbox.enabled = false;
                 }
                 else if (preppingCharge && !charging && !chargeReady)
                 {
@@ -137,6 +141,14 @@ public class BossController : MonoBehaviour
         }
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.name == "Player" && charging)
+        {
+            gameManager.WoundPlayer();
+        }
+    }
+
 
     // CHARGE COROUTINES
 
@@ -161,7 +173,7 @@ public class BossController : MonoBehaviour
 
     IEnumerator ChargeCooldown()
     {
-        yield return new WaitForSeconds(Random.Range(10, 18));
+        yield return new WaitForSeconds(Random.Range(6, 12));
         chargeAvailable = true;
     }
 
@@ -195,5 +207,4 @@ public class BossController : MonoBehaviour
         bossAudio.PlayOneShot(creatureNoises[Random.Range(1, 3)]);
         falling = true;
     }
-
 }

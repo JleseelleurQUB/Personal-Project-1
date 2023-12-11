@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+
 public class PlayerController : MonoBehaviour
 {
     private float inputHorizontal;
@@ -136,6 +137,11 @@ public class PlayerController : MonoBehaviour
         else
         {
             playerAnim.speed = 0;
+        }
+
+        if (alive)
+        {
+            transform.position = new Vector3(transform.position.x, -0.7f, transform.position.z);
         }
     }
 

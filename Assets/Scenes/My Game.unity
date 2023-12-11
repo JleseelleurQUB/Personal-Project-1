@@ -351,14 +351,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1318607228}
-  bossAnim: {fileID: 0}
-  emphasise: {fileID: 0}
-  master: {fileID: 0}
+  arm: {fileID: 168608612}
   creatureNoises:
   - {fileID: 8300000, guid: ac7afd1e68aff4f4c8da72268419baf5, type: 3}
   - {fileID: 8300000, guid: 8446e1a91c0325344b325ab2d3f64879, type: 3}
   - {fileID: 8300000, guid: 5959b8898af1d0b45a3d2d3905b919d5, type: 3}
-  chargeTime: 1
+  chargeTime: 1.5
   chargeSpeed: 20
 --- !u!136 &431376353
 CapsuleCollider:
@@ -779,13 +777,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 705507993}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
+  m_LocalRotation: {x: 0.5755706, y: -0.20785175, z: 0.15422365, w: 0.77571344}
   m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+  m_LocalEulerAnglesHint: {x: 73.15, y: -30, z: 0}
 --- !u!1 &836139341 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7723773159938600736, guid: 49f6e0a4845ced647b0166bb179d384c, type: 3}
