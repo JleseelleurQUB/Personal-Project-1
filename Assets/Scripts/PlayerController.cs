@@ -16,6 +16,9 @@ public class PlayerController : MonoBehaviour
     private bool hitCooldown = true;
     private bool alive = true;
     private bool falling = false;
+    [SerializeField] float jetPower;
+    [SerializeField] float jetCooldown;
+    private bool hasJet = true;
 
     public GameObject firePoint;
     public GameObject harpoonPrefab;
@@ -45,6 +48,7 @@ public class PlayerController : MonoBehaviour
       displayHarpoon.SetActive(true);
     }
 
+
     // Update is called once per frame
     void Update()
     {
@@ -61,10 +65,15 @@ public class PlayerController : MonoBehaviour
 
 
             // spawns projectile and starts cooldown when pressing space
-            if (Input.GetKeyDown(KeyCode.Space) && harpoonAvailable && gameManager.gameActive)
+            if (Input.GetKeyDown(KeyCode.Mouse0) && harpoonAvailable && gameManager.gameActive)
             {
                 SpawnHarpoon();
                 StartCoroutine(HarpoonRecharge());
+            }
+
+            if (Input.GetKeyDown(KeyCode.Space) && hasJet && gameManager.gameActive)
+            {
+                JetBoost();
             }
         }
        
@@ -145,9 +154,29 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    // Adds force in the current direction of movement when called
+    private void JetBoost()
+    {
+        Rigidbody playerRB = GetComponent<Rigidbody>();
+        playerRB.AddForce(-transform.forward * jetPower * Time.deltaTime, ForceMode.Impulse);
+        shootAudio.PlayOneShot(shoot);
+        for (int i = 0; i < 10; i++)
+        {
+            Instantiate(airBubbles, transform.position, airBubbles.transform.rotation);
+        }
+        hasJet = false;
+        StartCoroutine(JetCooldown());
+    }
+
+    IEnumerator JetCooldown()
+    {
+        yield return new WaitForSeconds(jetCooldown);
+        hasJet = true;
+    }
+
     public void FootstepAudio()
     {
-        bodyAudio.volume = 0.05f;
+        bodyAudio.volume = 0.1f;
         bodyAudio.PlayOneShot(footstep);
     }
 

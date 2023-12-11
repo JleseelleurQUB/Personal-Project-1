@@ -2052,6 +2052,8 @@ MonoBehaviour:
   speed: 8
   turnSpeedHorizontal: 1.2
   harpoonRecharge: 1
+  jetPower: 1300
+  jetCooldown: 4
   firePoint: {fileID: 1054765830}
   harpoonPrefab: {fileID: 5759974995762499301, guid: a6c47c5eecacf3a48925bd1cbacfa500, type: 3}
   displayHarpoon: {fileID: 39827237}

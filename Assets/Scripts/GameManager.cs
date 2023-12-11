@@ -23,7 +23,6 @@ public class GameManager : MonoBehaviour
     void Start()
     {
        
-      
        currentScene = SceneManager.GetActiveScene();
 
         // Initialises UI components in script and locks cursor in centre of screen to avoid issues with mouse navigation
@@ -53,6 +52,8 @@ public class GameManager : MonoBehaviour
         }
     }
 
+
+    // Function called by buttons to switch between scenes
     public void OnButtonPress(string buttonText)
     {
         switch (buttonText)
@@ -73,9 +74,10 @@ public class GameManager : MonoBehaviour
     }
 
 
+    // reduces boss health slider by 1 when called
     public void WoundBoss()
     {
-        // reduces boss health slider by 1 when called
+       
         bossHealth.value--;
 
         if (bossHealth.value < 1)
@@ -86,6 +88,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    // reduces player health by 1 when called
     public void WoundPlayer()
     {
         playerHealth.value--;
@@ -105,6 +108,7 @@ public class GameManager : MonoBehaviour
         
     }
 
+    // Displays game over screen and button to return to menu
     private void DisplayEndgame(string winner)
     {
         endgameUI.SetActive(true);
@@ -124,6 +128,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    // Toggles the ingame menu when tab is pressed
     private void UpdateMenu()
     {
         if(gameActive)
