@@ -12,8 +12,6 @@ public class BossController : MonoBehaviour
     public GameObject player;
     public Animator bossAnim;
     private GameManager gameManager;
-    public AudioMixerGroup emphasise;
-    public AudioMixerGroup master;
     private AudioSource bossAudio;
     public AudioClip[] creatureNoises;
     private bool alive = true;
@@ -55,7 +53,7 @@ public class BossController : MonoBehaviour
             transform.Translate(0, -0.1f, 0);
         }
 
-        Debug.Log(preppingCharge);
+      
     }
 
 
