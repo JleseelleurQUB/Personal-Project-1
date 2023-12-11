@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour
 
     public GameObject firePoint;
     public GameObject harpoonPrefab;
+    public GameObject displayHarpoon;
     public ParticleSystem bloodSpatter;
     public ParticleSystem airBubbles;
     private Animator playerAnim;
@@ -40,6 +41,7 @@ public class PlayerController : MonoBehaviour
       gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
       bodyAudio = GetComponent<AudioSource>();
       shootAudio = firePoint.GetComponent<AudioSource>();
+      displayHarpoon.SetActive(true);
     }
 
     // Update is called once per frame
@@ -83,6 +85,7 @@ public class PlayerController : MonoBehaviour
     {
         yield return new WaitForSeconds(harpoonRecharge);
         harpoonAvailable = true;
+        displayHarpoon.SetActive(true);
     }
 
     void SpawnHarpoon()
@@ -91,6 +94,7 @@ public class PlayerController : MonoBehaviour
         Instantiate(harpoonPrefab, firePoint.transform.position, transform.rotation);
         Instantiate(airBubbles, firePoint.transform.position, firePoint.transform.rotation);
         harpoonAvailable = false;
+        displayHarpoon.SetActive(false);
     }
 
 
