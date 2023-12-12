@@ -23,6 +23,7 @@ public class PlayerController : MonoBehaviour
     public GameObject firePoint;
     public GameObject harpoonPrefab;
     public GameObject displayHarpoon;
+    public GameObject arena;
     public ParticleSystem bloodSpatter;
     public ParticleSystem airBubbles;
     private Animator playerAnim;
@@ -148,7 +149,7 @@ public class PlayerController : MonoBehaviour
             playerAnim.speed = 0;
         }
 
-        if (alive)
+        if (alive && (transform.position - arena.transform.position).magnitude < 37)
         {
             transform.position = new Vector3(transform.position.x, -0.7f, transform.position.z);
         }
